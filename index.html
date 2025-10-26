@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار الرسالة 💬</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Cairo", sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .page {
+    width: 90%;
+    max-width: 400px;
+    background: rgba(255,255,255,0.08);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.15);
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.6s ease;
+  }
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 22px;
+  }
+
+  select, input[type="number"], button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  select, input {
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  button {
+    background: #ff0055;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #ff3366;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .message-box {
+    font-size: 20px;
+    background: rgba(0,0,0,0.4);
+    padding: 25px;
+    border-radius: 15px;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  @media (max-width: 480px) {
+    h2 { font-size: 20px; }
+    .message-box { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- الصفحة الأولى: الأسئلة -->
+<div id="questionsPage" class="page">
+  <h2>جاوب بصراحة 👀</h2>
+
+  <label>1️⃣ جنسك:</label>
+  <select id="gender">
+    <option value="">اختر...</option>
+    <option value="ذكر">ذكر</option>
+    <option value="أنثى">أنثى</option>
+  </select>
+
+  <label>2️⃣ عمرك:</label>
+  <input type="number" id="age" placeholder="اكتب عمرك">
+
+  <label>3️⃣ تكمي؟</label>
+  <select id="smoke">
+    <option value="">اختر...</option>
+    <option value="نعم">نعم</option>
+    <option value="لا">لا</option>
+  </select>
+
+  <label>4️⃣ مشكوك في أمرك؟</label>
+  <select id="suspect">
+    <option value="">اختر...</option>
+    <option value="نعم">نعم</option>
+    <option value="لا">لا</option>
+  </select>
+
+  <button onclick="nextPage()">عرض الرسالة 🔥</button>
+</div>
+
+<!-- الصفحة الثانية: النتيجة -->
+<div id="messagePage" class="page hidden">
+  <h2>💌 رسالتك الخاصة:</h2>
+  <div id="result" class="message-box"></div>
+  <button onclick="goBack()">رجوع ↩️</button>
+</div>
+
+<script>
+function nextPage() {
+  const gender = document.getElementById('gender').value;
+  const suspect = document.getElementById('suspect').value;
+
+  const maleMessages = [
+    "علبالي بلي راك عيان خويا نيك دنيا لي تبكيك حبب",
+    "متلعبهاش تضحك خو علبالي بلي راك في نيك",
+    "نعلطيزمها دنيا لي خلاتك تتعب ونتا صغير",
+    "كل مرة تحس بتعب شعل قارو ونيك دنيا",
+    "مالا راك تضحك كمل فيها حبب مهم تفكر بلي رانا كامل في نيك"
+  ];
+
+  const femaleMessages = [
+    "نيك دنيا لي تبكيلي دوك لعيني",
+    "تفكري ادا كان معندكش خو راني هنا مي متطلبيش دراهم برك",
+    "ضلموك؟ نعلطيزماتهم كامل ويدهم في نم افريقي",
+    "مراك زعفانة موالو خاصك برك راجل اسمو انس",
+    "    ادا لم تجدي من يحبك فاعرفي ان انس يحب كل نساء"
+     
+  ];
+
+  let message = "";
+
+  if (suspect === "نعم") {
+    message = "ادهب تعطي 😏";
+  } else if (gender === "ذكر") {
+    message = maleMessages[Math.floor(Math.random() * maleMessages.length)];
+  } else if (gender === "أنثى") {
+    message = femaleMessages[Math.floor(Math.random() * femaleMessages.length)];
+  } else {
+    alert("جاوب على كل الأسئلة   😄");
+    return;
+  }
+
+  document.getElementById('result').innerText = message;
+
+  // إخفاء صفحة الأسئلة واظهار الرسالة
+  document.getElementById('questionsPage').classList.add('hidden');
+  document.getElementById('messagePage').classList.remove('hidden');
+}
+
+function goBack() {
+  document.getElementById('questionsPage').classList.remove('hidden');
+  document.getElementById('messagePage').classList.add('hidden');
+}
+</script>
+
+</body>
+</html>
